@@ -15,6 +15,7 @@
 
 from copy import deepcopy
 from nnunet.utilities.nd_softmax import softmax_helper
+from nnunet.utilities import identity
 from torch import nn
 import torch
 import numpy as np
@@ -365,7 +366,7 @@ class Generic_UNet(SegmentationNetwork):
                 self.upscale_logits_ops.append(Upsample(scale_factor=tuple([int(i) for i in cum_upsample[usl + 1]]),
                                                         mode=upsample_mode))
             else:
-                self.upscale_logits_ops.append(lambda x: x)
+                self.upscale_logits_ops.append(identity)
 
         if not dropout_in_localization:
             self.dropout_op_kwargs['p'] = old_dropout_p
